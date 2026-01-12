@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김서연 | Frontend Developer</title>
+    
+    <!-- Tailwind CSS with Dark Mode Config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    
+    <!-- Google Fonts (Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* 부드러운 스크롤 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* 라이트 모드 그라데이션 */
+        .animated-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        /* 다크 모드 그라데이션 */
+        .dark .animated-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e293b);
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 카드 기본 스타일 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* 다크 모드 카드 스타일 */
+        .dark .glass-card {
+            background: rgba(31, 41, 55, 0.8); /* 다크 그레이 + 투명도 */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* 스킬 태그 스타일 */
+        .skill-tag {
+            transition: all 0.2s;
+        }
+        .skill-tag:hover {
+            transform: scale(1.05);
+        }
+
+        /* 토글 버튼 애니메이션 */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #68D391;
+        }
+    </style>
+</head>
+<body class="animated-bg min-h-screen text-gray-800 dark:text-gray-100 py-10 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+
+    <!-- 다크모드 토글 버튼 (우측 상단 고정) -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="bg-white dark:bg-gray-800 w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl hover:scale-110 transition duration-300 focus:outline-none">
+            <!-- 해 모양 아이콘 (라이트모드일 때 보임) -->
+            <i class="fas fa-sun text-yellow-500 dark:hidden"></i>
+            <!-- 달 모양 아이콘 (다크모드일 때 보임) -->
+            <i class="fas fa-moon text-purple-400 hidden dark:block"></i>
+        </button>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="max-w-4xl mx-auto space-y-8">
+
+        <!-- 1. 프로필 헤더 카드 -->
+        <header class="glass-card rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+            
+            <div class="flex flex-col items-center">
+                <!-- 프로필 이미지 -->
+                <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white dark:border-gray-700 shadow-lg overflow-hidden mb-6 bg-gray-200">
+                    <img src="https://ui-avatars.com/api/?name=Kim+Seoyeon&background=e9d5ff&color=6b21a8&size=200" alt="김서연 프로필 사진" class="w-full h-full object-cover">
+                </div>
+                
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">김서연 (Kim Seoyeon)</h1>
+                <p class="text-lg text-purple-600 dark:text-purple-400 font-semibold mb-4">Frontend Developer</p>
+                <p class="text-gray-600 dark:text-gray-300 max-w-lg mx-auto leading-relaxed">
+                    "사용자 경험을 최우선으로 생각하는 프론트엔드 개발자입니다."
+                </p>
+                
+                <!-- 소셜 링크 버튼들 -->
+                <div class="flex gap-4 mt-6 justify-center">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-900 dark:bg-black text-white flex items-center justify-center hover:bg-gray-700 dark:hover:bg-gray-800 transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition">
+                        <i class="fas fa-blog"></i>
+                    </a>
+                    <a href="mailto:seoyeon.kim@example.com" class="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- 2. 자기소개 섹션 -->
+        <section class="glass-card rounded-3xl p-8 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                <span class="w-2 h-8 bg-purple-500 rounded-full mr-3"></span>
+                About Me
+            </h2>
+            <div class="prose prose-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p class="mb-4">
+                    안녕하세요! 3년차 프론트엔드 개발자 <strong>김서연</strong>입니다.
+                </p>
+                <p class="mb-4">
+                    사용자가 직관적으로 사용할 수 있는 인터페이스를 만드는 것에 열정을 가지고 있습니다. 
+                    단순히 기능이 작동하는 것을 넘어, 최신 웹 기술을 활용하여 빠르고 아름다운 웹 애플리케이션을 개발하는 과정을 즐깁니다.
+                </p>
+                <p>
+                    복잡한 문제를 해결하고, 디자이너 및 백엔드 개발자와 원활하게 소통하며 최고의 결과물을 만들어내는 것을 목표로 합니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. 기술 스택 섹션 -->
+        <section class="glass-card rounded-3xl p-8 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                <span class="w-2 h-8 bg-pink-500 rounded-full mr-3"></span>
+                Tech Stack
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Frontend -->
+                <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-100 dark:border-gray-700 transition-colors">
+                    <h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 flex items-center">
+                        <i class="fab fa-react text-blue-400 mr-2"></i> Frontend
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-100 rounded-full text-sm font-medium">React</span>
+                        <span class="skill-tag px-3 py-1 bg-black dark:bg-gray-700 text-white rounded-full text-sm font-medium">Next.js</span>
+                        <span class="skill-tag px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-medium">TypeScript</span>
+                        <span class="skill-tag px-3 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-100 rounded-full text-sm font-medium">Vue.js</span>
+                    </div>
+                </div>
+
+                <!-- Styling -->
+                <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-100 dark:border-gray-700 transition-colors">
+                    <h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 flex items-center">
+                        <i class="fab fa-css3-alt text-blue-600 mr-2"></i> Styling
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-200 rounded-full text-sm font-medium">CSS3</span>
+                        <span class="skill-tag px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200 rounded-full text-sm font-medium">Sass</span>
+                        <span class="skill-tag px-3 py-1 bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-200 rounded-full text-sm font-medium">Tailwind CSS</span>
+                        <span class="skill-tag px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded-full text-sm font-medium">Styled-components</span>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-100 dark:border-gray-700 transition-colors">
+                    <h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 flex items-center">
+                        <i class="fas fa-tools text-gray-500 dark:text-gray-400 mr-2"></i> Tools
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-100 rounded-full text-sm font-medium">Git</span>
+                        <span class="skill-tag px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-100 rounded-full text-sm font-medium">Figma</span>
+                        <span class="skill-tag px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 rounded-full text-sm font-medium">Webpack</span>
+                        <span class="skill-tag px-3 py-1 bg-yellow-400 text-purple-900 rounded-full text-sm font-medium">Vite</span>
+                    </div>
+                </div>
+
+                <!-- Others -->
+                <div class="bg-white/50 dark:bg-gray-800/50 rounded-xl p-5 border border-gray-100 dark:border-gray-700 transition-colors">
+                    <h3 class="font-bold text-gray-700 dark:text-gray-200 mb-3 flex items-center">
+                        <i class="fas fa-server text-green-500 mr-2"></i> Others
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-full text-sm font-medium">REST API</span>
+                        <span class="skill-tag px-3 py-1 bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-100 rounded-full text-sm font-medium">GraphQL</span>
+                        <span class="skill-tag px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100 rounded-full text-sm font-medium">Firebase</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 프로젝트 경험 섹션 -->
+        <section class="glass-card rounded-3xl p-8 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                <span class="w-2 h-8 bg-blue-500 rounded-full mr-3"></span>
+                Projects
+            </h2>
+
+            <div class="space-y-6">
+                <!-- 프로젝트 1 -->
+                <div class="flex flex-col sm:flex-row gap-4 p-4 hover:bg-white/50 dark:hover:bg-gray-700/50 rounded-xl transition">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-200 rounded-lg flex items-center justify-center text-xl">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">E-commerce 플랫폼 리뉴얼</h3>
+                            <span class="text-sm text-gray-500 dark:text-gray-400 font-medium bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">2024</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">기존 레거시 시스템을 Next.js로 마이그레이션하여 로딩 속도를 40% 개선했습니다.</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#Next.js</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#React-Query</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 2 -->
+                <div class="flex flex-col sm:flex-row gap-4 p-4 hover:bg-white/50 dark:hover:bg-gray-700/50 rounded-xl transition">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-200 rounded-lg flex items-center justify-center text-xl">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">모바일 반응형 대시보드 개발</h3>
+                            <span class="text-sm text-gray-500 dark:text-gray-400 font-medium bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">2023</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">다양한 차트 라이브러리를 활용하여 데이터 시각화 및 모바일 최적화를 수행했습니다.</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#Vue.js</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프로젝트 3 -->
+                <div class="flex flex-col sm:flex-row gap-4 p-4 hover:bg-white/50 dark:hover:bg-gray-700/50 rounded-xl transition">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-200 rounded-lg flex items-center justify-center text-xl">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">디자인 시스템 구축</h3>
+                            <span class="text-sm text-gray-500 dark:text-gray-400 font-medium bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">2023</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">재사용 가능한 컴포넌트 라이브러리를 제작하여 개발 생산성을 높였습니다.</p>
+                        <div class="flex gap-2">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#Storybook</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">#TypeScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 연락처 정보 섹션 -->
+        <section class="glass-card rounded-3xl p-8 sm:p-10">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                <span class="w-2 h-8 bg-green-500 rounded-full mr-3"></span>
+                Contact
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="mailto:seoyeon.kim@example.com" class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition group border border-transparent dark:border-gray-700">
+                    <div class="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 text-red-500 dark:text-red-200 flex items-center justify-center mr-4 group-hover:bg-red-500 group-hover:text-white transition">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">Email</p>
+                        <p class="text-gray-800 dark:text-white font-medium">seoyeon.kim@example.com</p>
+                    </div>
+                </a>
+
+                <a href="https://github.com/seoyeonkim" target="_blank" class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition group border border-transparent dark:border-gray-700">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 flex items-center justify-center mr-4 group-hover:bg-gray-800 group-hover:text-white transition">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">GitHub</p>
+                        <p class="text-gray-800 dark:text-white font-medium">github.com/seoyeonkim</p>
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com/in/seoyeonkim" target="_blank" class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition group border border-transparent dark:border-gray-700">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-200 flex items-center justify-center mr-4 group-hover:bg-blue-600 group-hover:text-white transition">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">LinkedIn</p>
+                        <p class="text-gray-800 dark:text-white font-medium">linkedin.com/in/seoyeonkim</p>
+                    </div>
+                </a>
+
+                <a href="https://seoyeon.dev" target="_blank" class="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition group border border-transparent dark:border-gray-700">
+                    <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-200 flex items-center justify-center mr-4 group-hover:bg-green-600 group-hover:text-white transition">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase">Blog</p>
+                        <p class="text-gray-800 dark:text-white font-medium">seoyeon.dev</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 푸터 -->
+        <footer class="text-center text-white/80 py-6">
+            <p class="text-sm">
+                &copy; 2024 Kim Seoyeon. All rights reserved.
+            </p>
+            <p class="text-xs mt-1 opacity-70">Designed with Tailwind CSS</p>
+        </footer>
+
+    </div>
+
+    <!-- 스크립트: 다크모드 토글 및 로컬 스토리지 저장 -->
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        // 1. 초기 로드 시 테마 확인 (로컬 스토리지 or 시스템 설정)
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        // 2. 버튼 클릭 이벤트
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // 3. 이메일 복사 스크립트 (선택 사항)
+        document.querySelector('a[href^="mailto"]').addEventListener('click', function(e) {
+            // e.preventDefault();
+            // navigator.clipboard.writeText('seoyeon.kim@example.com');
+        });
+    </script>
+</body>
+</html>
